@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">TraderApp</string>
+    <string name="position" translatable="false">position</string>
+    <string name="username_text">kullanıcı adı</string>
+    <string name="create_account_text">Hesap Oluştur</string>
+    <string name="password_text">şifre</string>
+    <string name="login_text">GİRİŞ</string>
+    <string name="forget_password">Şifremi unuttum</string>
+    <string name="welcome_text">Hoş geldiniz</string>
+    <string name="login_description_text">Trader uygulamasına giriş yapmak üzeresiniz</string>
+    <string name="unexpected_exception">unexpected exception</string>
+
+</resources>
