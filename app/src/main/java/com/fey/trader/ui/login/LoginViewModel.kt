@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.fey.trader.core.BaseViewModel
 import com.fey.trader.core.Constants.NetworkService.AccountID
+import com.fey.trader.core.Constants.NetworkService.CustomerNo
 import com.fey.trader.core.Constants.NetworkService.ExchangeID
 import com.fey.trader.core.Constants.NetworkService.MsgType
 import com.fey.trader.core.Constants.NetworkService.OutputType
@@ -11,6 +12,9 @@ import com.fey.trader.data.remote.MatriksApi
 import com.fey.trader.data.repo.auth.UserRepository
 import com.fey.trader.utils.UserAuthResult
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -28,6 +32,7 @@ class LoginViewModel @Inject constructor(
     val username = MutableLiveData<String>("")
     val password = MutableLiveData<String>("")
     //endregion
+    private val dis = CompositeDisposable()
 
      val resultChannel = MutableLiveData<UserAuthResult<Unit>>()
 
@@ -45,8 +50,13 @@ class LoginViewModel @Inject constructor(
             resultLoading.postValue(true)
             if (username != null) {
                 if (password != null) {
-                    api.login(MsgType,username,password,AccountID,ExchangeID,OutputType)
-                        .enqueue(object : Callback)
+
+                    dis.add(api.login(MsgType,CustomerNo,username,password,AccountID,ExchangeID,OutputType)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(Schedulers.io())
+                        .subscribe {
+                            Timber.e("loginresponse %s  %s",it.accountID,it.result.description)
+                        })
                 }
             }
             resultLoading.postValue(true)
@@ -71,17 +81,10 @@ class LoginViewModel @Inject constructor(
         }
         return check
     }
-    fun login(
-        username: String,
-        password: String
-    ) {
-        viewModelScope.launch {
-            val result = repository.login(
-                username = username,
-                password = password
-            )
-            resultChannel.postValue(result)
-        }
+
+    override fun onCleared() {
+        dis.dispose()
+        super.onCleared()
     }
 
 }

@@ -9,7 +9,7 @@ import javax.inject.Inject
 class UserRepository @Inject constructor(
 private val matriksApi: MatriksApi,   private val prefs: SharedPreferences
 ) {
-
+/*
     suspend fun login(
         username: String,
         password: String
@@ -46,5 +46,5 @@ private val matriksApi: MatriksApi,   private val prefs: SharedPreferences
         }catch (e: Exception){
             UserAuthResult.UserUnknownError()
         }
-    }
+    }?*/
 }
