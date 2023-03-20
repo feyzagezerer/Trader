@@ -1,24 +1,15 @@
 package com.fey.trader.data.model
 
-
-import android.os.Parcelable
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
-import kotlinx.parcelize.Parcelize
+import com.facebook.stetho.json.annotation.JsonProperty
+import com.google.gson.annotations.JsonAdapter
 
 
-@Parcelize
-@JsonClass(generateAdapter = true)
 data class ListItem(
-
-    @Json(name = "symbol")
+    @JsonProperty
     val symbol: String?,
-
-    @Json(name = "Qty_T2")
+    @JsonProperty
     val Qty_T2: Int?,
-
-    @Json(name = "LastPx")
+    @JsonProperty
     val LastPx: Int?,
 
-) : Parcelable {
-}
+)

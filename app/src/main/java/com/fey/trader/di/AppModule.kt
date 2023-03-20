@@ -2,7 +2,7 @@ package com.fey.trader.di
 
 import android.content.Context
 import android.preference.PreferenceManager
-import com.squareup.moshi.Moshi
+
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,8 +19,8 @@ object AppModule {
     fun provideSharedPreferences(@ApplicationContext context: Context) =
         PreferenceManager.getDefaultSharedPreferences(context)
 
-    @Provides
-    @Singleton
-    fun provideMoshi(): Moshi = Moshi.Builder().build()
+   // @Provides
+    //@Singleton
+  //  fun provideMoshi(): Moshi = Moshi.Builder().build()
 
 }

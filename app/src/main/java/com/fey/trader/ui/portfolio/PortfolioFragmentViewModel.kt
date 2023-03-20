@@ -20,14 +20,12 @@ class PortfolioFragmentViewModel @Inject internal constructor(
     val stocks: MutableLiveData<Resource<Stocks>> = MutableLiveData()
     private var stocksResponse: Stocks? = null
 
-    private fun getAllStocks(MsgType: String,  username: String,  password: String,  AccountID: String,  ExchangeID: String,OutputType: String) = viewModelScope.launch {
+  /*  private fun getAllStocks(MsgType: String,  username: String,  password: String,  AccountID: String,  ExchangeID: String,OutputType: String) = viewModelScope.launch {
         stocks.postValue(Resource.loading())
         val response = stockRepository.getAllStocks(MsgType, username, password,AccountID, ExchangeID,OutputType)
         stocks.postValue(handleArticlesResponse(response))
-    }
+    }*/
 
-    private fun handleArticlesResponse(response: Call<List<Stocks>>): Resource<Stocks> {
 
-    }
 
 }

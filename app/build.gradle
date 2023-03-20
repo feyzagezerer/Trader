@@ -2,8 +2,8 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
-    id 'kotlin-parcelize'
     id 'dagger.hilt.android.plugin'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -30,8 +30,8 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    kotlinOptions {
-        jvmTarget = '1.8'
+    kapt {
+        correctErrorTypes true
     }
     buildFeatures {
         dataBinding = true
@@ -44,13 +44,16 @@ dependencies {
    // implementation 'com.android.support.constraint:constraint-layout:2.0.4'
    // androidTestImplementation 'com.android.support.test:runner:1.0.2'
    // androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.appcompat:appcompat:1.5.0'
-    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.0'
+    // Hilt
+    implementation 'com.google.dagger:hilt-android:2.44'
+    kapt 'com.google.dagger:hilt-compiler:2.44'
     // timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
     // stetho
@@ -59,15 +62,10 @@ dependencies {
     implementation 'com.facebook.stetho:stetho-urlconnection:1.6.0'
 
     // Navigation
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.1'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.1'
-    implementation 'androidx.navigation:navigation-runtime-ktx:2.5.1'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
+    implementation 'androidx.navigation:navigation-runtime-ktx:2.5.3'
 
-// moshi
-    implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
-    implementation 'com.squareup.moshi:moshi:1.12.0'
-    implementation 'com.squareup.moshi:moshi-kotlin:1.12.0'
-    implementation 'com.squareup.moshi:moshi-kotlin-codegen:1.12.0'
     // OkHttp
     implementation platform("com.squareup.okhttp3:okhttp-bom:4.9.3")
     implementation 'com.squareup.okhttp3:okhttp'
@@ -80,9 +78,9 @@ dependencies {
     // Paging library
     implementation 'androidx.paging:paging-runtime:3.1.1'
 
-    // Hilt
-    implementation 'com.google.dagger:hilt-android:2.42'
-    kapt 'com.google.dagger:hilt-compiler:2.42'
+    //gson
+    implementation 'com.google.code.gson:gson:2.10.1'
+
 
     // Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
@@ -90,8 +88,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-crashlytics-ktx:18.2.9'
     implementation 'com.google.firebase:firebase-analytics-ktx:20.1.2'
 
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
 }

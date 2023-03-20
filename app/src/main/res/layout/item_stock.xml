@@ -42,7 +42,6 @@
                     android:layout_below="@id/Qty_T2"
                     android:layout_marginTop="24dp"
                     android:layout_marginLeft="24dp"
-                    android:text="@{viewModel.item.symbol}"
                     android:textColor="@color/white"
                     android:textSize="8sp"
                     android:textStyle="bold"/>
@@ -55,8 +54,7 @@
                     android:textColor="@color/white"
                     android:textSize="14sp"
                     android:layout_below="@id/LastPx"
-                    android:textStyle="bold"
-                    android:text="@{viewModel.item.qty_T2}" />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/LastPx"
@@ -66,8 +64,7 @@
                     android:layout_marginTop="8dp"
                      android:textColor="@color/white"
                     android:textSize="26sp"
-                    android:textStyle="bold"
-                    android:text="@{viewModel.item.lastPx}" />
+                    android:textStyle="bold" />
 
             </RelativeLayout>
         </com.google.android.material.card.MaterialCardView>

@@ -9,9 +9,6 @@
             name="viewModel"
             type="com.fey.trader.ui.portfolio.PortfolioFragmentViewModel" />
 
-        <variable
-            name="viewState"
-            type="com.fey.trader.ui.portfolio.ForecastViewState" />
     </data>
 
     <RelativeLayout
@@ -37,8 +34,8 @@
                     android:id="@+id/progressBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    app:visibility="@{viewState.isLoading()}" />
+                    android:layout_centerInParent="true"/>
+<!--                    app:visibility="@{viewState.isLoading()}" -->
 
                 <TextView
                     android:id="@+id/textViewForecastHeader"
@@ -71,7 +68,6 @@
             android:backgroundTint="@color/colorPrimary"
             app:cardCornerRadius="0dp"
             app:cardElevation="16dp"
-            app:setErrorView="@{viewState}"
             app:strokeColor="@android:color/holo_red_dark"
             app:strokeWidth="2dp">
 
@@ -86,7 +82,6 @@
                 android:paddingBottom="12dp"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
-                app:setErrorText="@{viewState}"
                 tools:text="Status code : 500 Internal server error!" />
 
         </com.google.android.material.card.MaterialCardView>
