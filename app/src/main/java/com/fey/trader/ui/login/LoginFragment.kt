@@ -4,9 +4,17 @@ package com.fey.trader.ui.login
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.library.baseAdapters.BR
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.fey.trader.R
 import com.fey.trader.core.BaseFragment
@@ -17,60 +25,58 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class LoginFragment : BaseFragment<LoginViewModel, FragmentLoginBinding>(
-    R.layout.fragment_login,
-    LoginViewModel::class.java,
+class LoginFragment : Fragment(
 ) {
     private lateinit var sharedPreferences: SharedPreferences
-    private val loginViewModel : LoginViewModel by viewModels()
-    @SuppressLint("SuspiciousIndentation")
-    override fun init() {
-        super.init()
-        sharedPreferences = context?.getSharedPreferences("STATE", Context.MODE_PRIVATE)!!
-         showItems()
+    private val loginViewModel: LoginViewModel by viewModels()
+    private lateinit var binding: FragmentLoginBinding
+    /*  override fun init() {
+          super.init()
+          sharedPreferences = context?.getSharedPreferences("STATE", Context.MODE_PRIVATE)!!
+           showItems()
+          initObservers()
+              binding.loginButton.setOnClickListener {
+                  if (checkUsernameAndPassword(
+                          username,
+                          password
+                      )
+                  ) {
+                     loginViewModel.login(
+                         username,
+                          password
+                      ).also {
+                          addSharedPreferences(username, password)
+                      }
+                     // navigate(R.id.portfolioFragment)
+                  //      navigate(R.id.action_loginFragment_to_portfolioFragment)
+                  } else {
+                      toast("There are places left blank")
+                  }
+              }
+
+      }*/
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
+        binding.run {
+            lifecycleOwner = viewLifecycleOwner
+            viewModel = loginViewModel
+        }
         initObservers()
-            binding.loginButton.setOnClickListener {
-
-                val username = binding.usernameEditText.text.toString()
-                val password = binding.passwordText.text.toString()
-
-                if (checkUsernameAndPassword(
-                        username,
-                        password
-                    )
-                ) {
-                   loginViewModel.login(
-                       username,
-                        password
-                    ).also {
-                        addSharedPreferences(username, password)
-                    }
-                   // navigate(R.id.portfolioFragment)
-                //      navigate(R.id.action_loginFragment_to_portfolioFragment)
-                } else {
-                    toast("There are places left blank")
-                }
-            }
-
+        return binding.root
     }
-
-private fun checkUsernameAndPassword( username: String,
-                                      password: String): Boolean {
-    val check = when {
-        username.trim().isEmpty() -> false
-        password.trim().isEmpty() -> false
-        else -> true
-    }
-    return check
-}
 
     private fun initObservers() {
-        lifecycleScope.launchWhenCreated {
-            loginViewModel.authResult.collect { authResult ->
+        loginViewModel.apply {
+            resultChannel.observe(viewLifecycleOwner) { authResult ->
                 when (authResult) {
                     is UserAuthResult.UserAuthorized -> {
-                        showProgressBar()
-                        navigate(R.id.portfolioFragment)
+                        //addSharedPreferences()
+                   findNavController().navigate(R.id.action_loginFragment_to_portfolioFragment)
                         toast("UserAuthorized")
                     }
                     is UserAuthResult.UserUnAuthorized -> {
@@ -83,42 +89,22 @@ private fun checkUsernameAndPassword( username: String,
                     }
                 }
             }
-        }}
-private fun addSharedPreferences(username: String,password: String){
-    val editor = sharedPreferences.edit()
-    editor.putString("state","user")
-    editor.putString("username",username)
-    editor.putString("password",password)
-    editor.commit()
-}
-    private fun clearSharedPreferences(){
+        }
+        }
+
+
+
+    private fun addSharedPreferences(username: String, password: String) {
+        val editor = sharedPreferences.edit()
+        editor.putString("state", "user")
+        editor.putString("username", username)
+        editor.putString("password", password)
+        editor.commit()
+    }
+
+    private fun clearSharedPreferences() {
         val editor = sharedPreferences.edit()
         editor.clear()
         editor.apply()
     }
-    private fun showItems(){
-        with(binding){
-            loginButton.visibility = View.VISIBLE
-            passwordText.visibility = View.VISIBLE
-            //signUpPageTextView.visibility = View.VISIBLE
-            usernameEditText.visibility = View.VISIBLE
-            forgetPasswordTextView.visibility = View.VISIBLE
-            welcomeTV.visibility = View.VISIBLE
-            infoTV.visibility = View.VISIBLE
-            progressBar.visibility = View.GONE
-        }
-    }
-
-    private fun showProgressBar(){
-        with(binding){//progress
-            progressBar.visibility = View.VISIBLE
-            loginButton.visibility = View.GONE
-            passwordText.visibility = View.GONE
-        //    signUpPageTextView.visibility = View.GONE
-            usernameEditText.visibility = View.GONE
-            forgetPasswordTextView.visibility = View.GONE
-            welcomeTV.visibility = View.GONE
-            infoTV.visibility = View.GONE
-        }
-}
 }

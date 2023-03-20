@@ -51,7 +51,7 @@
 
         </com.google.android.material.appbar.AppBarLayout>
        </androidx.drawerlayout.widget.DrawerLayout>
-        <fragment
+        <androidx.fragment.app.FragmentContainerView
 
             android:id="@+id/container_fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"

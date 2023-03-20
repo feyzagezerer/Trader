@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
+
         <variable
             name="viewModel"
             type="com.fey.trader.ui.login.LoginViewModel" />
@@ -22,6 +24,7 @@
         android:ems="10"
         android:hint="@string/password_text"
         android:inputType="textPassword"
+        android:text="@={viewModel.password}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,6 +53,7 @@
         android:layout_marginTop="25dp"
         android:hint="@string/username_text"
         android:inputType="textPersonName"
+        android:text="@={viewModel.username}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/infoTV" />
@@ -62,6 +66,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
         android:text="@string/login_text"
+        android:onClick="@{()->viewModel.onLoginClick()}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/passwordText" />
@@ -107,8 +112,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:padding="180dp"
-        android:elevation="2dp"
-        android:visibility="visible"
+        android:elevation="7dp"
+        android:visibility="@{viewModel.resultLoading==true ? View.VISIBLE : View.GONE}"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

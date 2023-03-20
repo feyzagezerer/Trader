@@ -1,10 +1,8 @@
 package com.fey.trader.data.repo.auth
 
 import android.content.SharedPreferences
-import com.fey.trader.data.model.UserRequest
 import com.fey.trader.data.remote.MatriksApi
 import com.fey.trader.utils.UserAuthResult
-import kotlinx.coroutines.flow.Flow
 import retrofit2.HttpException
 import javax.inject.Inject
 
