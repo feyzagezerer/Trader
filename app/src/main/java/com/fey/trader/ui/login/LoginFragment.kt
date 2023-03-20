@@ -27,34 +27,9 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class LoginFragment : Fragment(
 ) {
-    private lateinit var sharedPreferences: SharedPreferences
+
     private val loginViewModel: LoginViewModel by viewModels()
     private lateinit var binding: FragmentLoginBinding
-    /*  override fun init() {
-          super.init()
-          sharedPreferences = context?.getSharedPreferences("STATE", Context.MODE_PRIVATE)!!
-           showItems()
-          initObservers()
-              binding.loginButton.setOnClickListener {
-                  if (checkUsernameAndPassword(
-                          username,
-                          password
-                      )
-                  ) {
-                     loginViewModel.login(
-                         username,
-                          password
-                      ).also {
-                          addSharedPreferences(username, password)
-                      }
-                     // navigate(R.id.portfolioFragment)
-                  //      navigate(R.id.action_loginFragment_to_portfolioFragment)
-                  } else {
-                      toast("There are places left blank")
-                  }
-              }
-
-      }*/
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -72,39 +47,23 @@ class LoginFragment : Fragment(
 
     private fun initObservers() {
         loginViewModel.apply {
-            resultChannel.observe(viewLifecycleOwner) { authResult ->
-                when (authResult) {
-                    is UserAuthResult.UserAuthorized -> {
-                        //addSharedPreferences()
-                   findNavController().navigate(R.id.action_loginFragment_to_portfolioFragment)
-                        toast("UserAuthorized")
-                    }
-                    is UserAuthResult.UserUnAuthorized -> {
-                        clearSharedPreferences()
-                        toast("UserUnAuthorized")
-                    }
-                    is UserAuthResult.UserUnknownError -> {
-                        clearSharedPreferences()
-                        toast("UserUnknownError")
-                    }
+            loginSuccess.observe(viewLifecycleOwner) {
+                if (it) {
+                    findNavController().navigate(R.id.action_loginFragment_to_portfolioFragment)
+                }
+            }
+            errorMessage.observe(viewLifecycleOwner) {
+                if (it.isNotEmpty()) {
+                    toast(it)
                 }
             }
         }
-        }
-
-
-
-    private fun addSharedPreferences(username: String, password: String) {
-        val editor = sharedPreferences.edit()
-        editor.putString("state", "user")
-        editor.putString("username", username)
-        editor.putString("password", password)
-        editor.commit()
     }
 
-    private fun clearSharedPreferences() {
+
+    /*private fun clearSharedPreferences() {
         val editor = sharedPreferences.edit()
         editor.clear()
         editor.apply()
-    }
+    }*/
 }
