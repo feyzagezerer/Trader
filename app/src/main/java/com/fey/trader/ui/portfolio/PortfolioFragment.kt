@@ -1,50 +1,67 @@
 package com.fey.trader.ui.portfolio
 
 
+import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fey.trader.R
 import com.fey.trader.core.BaseFragment
+import com.fey.trader.databinding.FragmentLoginBinding
 import com.fey.trader.databinding.FragmentPortfolioBinding
+import com.fey.trader.ui.login.LoginViewModel
+import com.fey.trader.utils.extensions.toast
 
 import dagger.hilt.android.AndroidEntryPoint
 
 
+
 @AndroidEntryPoint
-class PortfolioFragment : BaseFragment<PortfolioFragmentViewModel, FragmentPortfolioBinding>(
-    R.layout.fragment_portfolio,
-    PortfolioFragmentViewModel::class.java,
+class PortfolioFragment : Fragment(
 ) {
-    private var isLoading = false
-    private var isLastPage = false
-    private var isScrolling = false
-    override fun init() {
-        super.init()
 
+    private val portfolioViewModel: PortfolioFragmentViewModel by viewModels()
+    private lateinit var binding: FragmentPortfolioBinding
 
-        //binding.recyclerStock.adapter = adapter
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_portfolio, container, false)
+        binding.run {
+            lifecycleOwner = viewLifecycleOwner
+            viewModel = portfolioViewModel
+        }
         binding.recyclerStock.layoutManager = LinearLayoutManager(
             context,
             LinearLayoutManager.HORIZONTAL,
             false
         )
         postponeEnterTransition()
-        binding.recyclerStock.viewTreeObserver
-            .addOnPreDrawListener {
-                startPostponedEnterTransition()
-                true
+
+        initObservers()
+        return binding.root
+    }
+
+    private fun initObservers() {
+        portfolioViewModel.apply {
+            stocksSuccess.observe(viewLifecycleOwner) {
+toast("GELDİLER")
             }
-
-
+            errorMessage.observe(viewLifecycleOwner) {
+                if (it.isNotEmpty()) {
+                    toast(it)
+                }
+            }
+        }
     }
 
-    private fun showProgressBar() {
-        binding.progressBar.visibility = View.VISIBLE
-        isLoading = true
-    }
-    private fun hideProgressBar() {
-        binding.progressBar.visibility = View.GONE
-        isLoading = false
-    }
 
-    }
+
+}

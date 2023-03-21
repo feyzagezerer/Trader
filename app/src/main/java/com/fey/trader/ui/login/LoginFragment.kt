@@ -61,9 +61,5 @@ class LoginFragment : Fragment(
     }
 
 
-    /*private fun clearSharedPreferences() {
-        val editor = sharedPreferences.edit()
-        editor.clear()
-        editor.apply()
-    }*/
+
 }

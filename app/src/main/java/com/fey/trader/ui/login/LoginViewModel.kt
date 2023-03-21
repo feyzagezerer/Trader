@@ -50,7 +50,7 @@ class LoginViewModel @Inject constructor(
     }
   private  fun authenticate(username: String?,password: String?){
         viewModelScope.launch {
-            resultLoading.postValue(true)
+
             if (username != null) {
                 if (password != null) {
 
@@ -59,7 +59,7 @@ class LoginViewModel @Inject constructor(
                         .observeOn(Schedulers.io())
                         .subscribe {
                             Timber.e("loginresponse %s  %s",it.accountID,it.result.description)
-                            checkResult(it,username,password)
+                            checkResult(it,username,password, it.accountID)
 
                         })
                 }
@@ -67,19 +67,20 @@ class LoginViewModel @Inject constructor(
             resultLoading.postValue(true)
         }
     }
-    private fun checkResult(loginResponse: LoginResponse,username: String, password: String){
+    private fun checkResult(loginResponse: LoginResponse,username: String, password: String,accountID: String){
         if(loginResponse.result.state){
-            addSharedPreferences(username,password)
+            addSharedPreferences(username,password,accountID)
             loginSuccess.postValue(true)
         }else{
             errorMessage.postValue(loginResponse.result.description)
         }
     }
-    private fun addSharedPreferences(username: String, password: String) {
+    private fun addSharedPreferences(username: String, password: String, accountID: String) {
         val editor = sharedPreferences.edit()
         editor.putString("state", "user")
         editor.putString("username", username)
         editor.putString("password", password)
+        editor.putString("accountID", accountID)
         editor.apply()
     }
     private fun checkUsernameAndPassword(
@@ -100,8 +101,13 @@ class LoginViewModel @Inject constructor(
         }
         return check
     }
-
+    private fun clearSharedPreferences() {
+            val editor = sharedPreferences.edit()
+            editor.clear()
+            editor.apply()
+        }
     override fun onCleared() {
+        clearSharedPreferences()
         dis.dispose()
         super.onCleared()
     }

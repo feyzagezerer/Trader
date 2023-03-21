@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.fey.trader.ui.portfolio.PortfolioFragmentViewModel" />
@@ -34,15 +34,18 @@
                     android:id="@+id/progressBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:padding="180dp"
+                    android:elevation="7dp"
+                    android:visibility="@{viewModel.resultLoading==true ? View.VISIBLE : View.GONE}"
                     android:layout_centerInParent="true"/>
-<!--                    app:visibility="@{viewState.isLoading()}" -->
+
 
                 <TextView
                     android:id="@+id/textViewForecastHeader"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="Hisse Portföyüm"
+                    android:text="Hesap Özeti"
                     android:textColor="@color/mainTextColor"
                     android:textSize="19sp"
                     android:textStyle="bold" />
@@ -71,18 +74,6 @@
             app:strokeColor="@android:color/holo_red_dark"
             app:strokeWidth="2dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:drawableEnd="@android:drawable/stat_notify_error"
-                android:paddingStart="12dp"
-                android:paddingTop="12dp"
-                android:paddingEnd="24dp"
-                android:paddingBottom="12dp"
-                android:textColor="@android:color/white"
-                android:textStyle="bold"
-                tools:text="Status code : 500 Internal server error!" />
 
         </com.google.android.material.card.MaterialCardView>
     </RelativeLayout>
