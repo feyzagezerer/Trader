@@ -8,8 +8,8 @@ data class ListItem(
     @JsonProperty
     val symbol: String?,
     @JsonProperty
-    val Qty_T2: Int?,
+    val qty_T2: Double?,
     @JsonProperty
-    val LastPx: Int?,
+    val lastPx: Double?,
 
 )

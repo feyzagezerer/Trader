@@ -1,54 +1,55 @@
 package com.fey.trader.ui.portfolio
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.ViewDataBinding
-import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
-import com.fey.trader.core.BaseAdapter
-import com.fey.trader.data.model.ListItem
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LiveData
 import com.fey.trader.databinding.ItemStockBinding
+import androidx.recyclerview.widget.RecyclerView
+import com.fey.trader.R
+import com.fey.trader.core.BaseViewHolder
+import com.fey.trader.data.model.Item
+import com.fey.trader.data.model.ListItem
+
+
 
 import com.squareup.picasso.Picasso
 
-class PortfolioAdapter (private val callBack: (ListItem, View, View, View) -> Unit
-) : BaseAdapter<ListItem>(diffCallback) {
+class PortfolioAdapter  : RecyclerView.Adapter<PortfolioAdapter.PortfolioViewHolder>() {
 
-    override fun createBinding(parent: ViewGroup, viewType: Int): ViewDataBinding {
-        val mBinding = ItemStockBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
+    private val stocks = mutableListOf<Item>()
+    fun setStocks(stocks: List<Item>){
+        this.stocks.clear()
+        this.stocks.addAll(stocks)
+        notifyDataSetChanged()
+    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PortfolioViewHolder {
+       val binding = DataBindingUtil.inflate<ItemStockBinding>(
+           LayoutInflater.from(parent.context),
+       R.layout.item_stock,
+        parent,
+        false
         )
-        val viewModel = PortfolioItemViewModel()
-        mBinding.viewModel = viewModel
-
-        mBinding.cardView.setOnClickListener {
-            mBinding.viewModel?.item?.get()?.let {
-                callBack(
-                    it,
-                    mBinding.symbol,
-                    mBinding.QtyT2,
-                    mBinding.LastPx,
-                )
-            }
-        }
-        return mBinding
+        return PortfolioViewHolder(binding)
     }
 
-    override fun bind(binding: ViewDataBinding, position: Int) {
-        (binding as ItemStockBinding).viewModel?.item?.set(getItem(position))
-        binding.executePendingBindings()
+    override fun onBindViewHolder(holder: PortfolioViewHolder, position: Int) {
+        holder.bind(stocks[position])
+
+    }
+
+    override fun getItemCount(): Int {
+        return stocks.size
+    }
+
+    class PortfolioViewHolder(private val binding: ItemStockBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(stock: Item) {
+            binding.symbol.text = stock.symbol
+            binding.qtyT2.text = stock.qtyT2.toString()
+            binding.lastPx.text = stock.lastPx.toString()
+        //    binding.apply {
+       // }
     }
 }
-
-val diffCallback = object : DiffUtil.ItemCallback<ListItem>() {
-    override fun areContentsTheSame(oldItem: ListItem, newItem: ListItem): Boolean =
-        oldItem == newItem
-
-    override fun areItemsTheSame(oldItem: ListItem, newItem: ListItem): Boolean =
-        oldItem.symbol == newItem.symbol
 }

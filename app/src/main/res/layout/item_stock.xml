@@ -9,63 +9,56 @@
             type="com.fey.trader.ui.portfolio.PortfolioItemViewModel" />
     </data>
 
-    <RelativeLayout
-        android:id="@+id/rootView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="40dp"
-            android:clickable="true"
-            android:focusable="true"
-            app:cardCornerRadius="24dp"
-            tools:backgroundTint="@color/colorPrimary">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+    <androidx.cardview.widget.CardView
+        android:id="@+id/myCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/button_bg_color"
+        app:cardCornerRadius="15dp"
+        android:layout_margin="10dp"
+        app:cardElevation="4dp"
+        app:cardUseCompatPadding="true"
+        app:contentPadding="16dp">
 
                 <TextView
                     android:id="@+id/symbol"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_centerHorizontal="false"
-                    android:layout_below="@id/Qty_T2"
+
+                    android:text="@{viewModel.item.symbol}"
+                    android:layout_below="@id/qty_T2"
                     android:layout_marginTop="24dp"
                     android:layout_marginLeft="24dp"
                     android:textColor="@color/white"
-                    android:textSize="8sp"
+                    android:textAlignment="center"
+                    android:textSize="30sp"
                     android:textStyle="bold"/>
 
                 <TextView
-                    android:id="@+id/Qty_T2"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/qty_T2"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
+
+                    android:text="@{viewModel.item.qty_T2.toString()}"
                     android:textColor="@color/white"
-                    android:textSize="14sp"
-                    android:layout_below="@id/LastPx"
+                    android:textSize="30sp"
+                    android:textAlignment="textStart"
+                    android:layout_below="@id/lastPx"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/LastPx"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/lastPx"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
+
                     android:layout_marginTop="8dp"
-                     android:textColor="@color/white"
-                    android:textSize="26sp"
+                    android:textAlignment="textEnd"
+                    android:text="@{viewModel.item.lastPx.toString()}"
+                    android:textColor="@color/white"
+                    android:textSize="30sp"
                     android:textStyle="bold" />
 
-            </RelativeLayout>
-        </com.google.android.material.card.MaterialCardView>
-    </RelativeLayout>
+
+  </androidx.cardview.widget.CardView>
 </layout>

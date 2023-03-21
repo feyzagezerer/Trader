@@ -8,17 +8,16 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fey.trader.R
-import com.fey.trader.core.BaseFragment
-import com.fey.trader.databinding.FragmentLoginBinding
+import com.fey.trader.data.model.Item
+
 import com.fey.trader.databinding.FragmentPortfolioBinding
-import com.fey.trader.ui.login.LoginViewModel
 import com.fey.trader.utils.extensions.toast
 
 import dagger.hilt.android.AndroidEntryPoint
-
+import timber.log.Timber
 
 
 @AndroidEntryPoint
@@ -27,7 +26,7 @@ class PortfolioFragment : Fragment(
 
     private val portfolioViewModel: PortfolioFragmentViewModel by viewModels()
     private lateinit var binding: FragmentPortfolioBinding
-
+private lateinit var portfolioAdapter: PortfolioAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,30 +37,42 @@ class PortfolioFragment : Fragment(
             lifecycleOwner = viewLifecycleOwner
             viewModel = portfolioViewModel
         }
-        binding.recyclerStock.layoutManager = LinearLayoutManager(
+        portfolioAdapter = PortfolioAdapter()
+        binding.recyclerStock.apply {
+        layoutManager = LinearLayoutManager(
             context,
-            LinearLayoutManager.HORIZONTAL,
+            LinearLayoutManager.VERTICAL,
             false
         )
-        postponeEnterTransition()
+        adapter=portfolioAdapter}
+        //postponeEnterTransition()
 
         initObservers()
         return binding.root
     }
 
     private fun initObservers() {
+       dol()
         portfolioViewModel.apply {
             stocksSuccess.observe(viewLifecycleOwner) {
-toast("GELDİLER")
+        Timber.e ("GELDİLER")
             }
             errorMessage.observe(viewLifecycleOwner) {
                 if (it.isNotEmpty()) {
                     toast(it)
                 }
             }
+
         }
+        portfolioViewModel.getStocks()
     }
 
-
+private fun dol(){
+    portfolioViewModel.stocks.observe(viewLifecycleOwner, Observer { stocks ->
+        stocks?.let {
+            portfolioAdapter.setStocks(stocks)
+        }
+    })
+}
 
 }

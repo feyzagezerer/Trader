@@ -11,23 +11,9 @@
 
     </data>
 
-    <RelativeLayout
-        android:id="@+id/rootView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:fitsSystemWindows="true"
-        tools:context=".ui.dashboard.DashboardFragment">
-
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/scrollView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/white">
-
             <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
 
                 <ProgressBar
@@ -62,19 +48,4 @@
                     tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_stock" />
             </RelativeLayout>
-        </androidx.core.widget.NestedScrollView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:backgroundTint="@color/colorPrimary"
-            app:cardCornerRadius="0dp"
-            app:cardElevation="16dp"
-            app:strokeColor="@android:color/holo_red_dark"
-            app:strokeWidth="2dp">
-
-
-        </com.google.android.material.card.MaterialCardView>
-    </RelativeLayout>
 </layout>
