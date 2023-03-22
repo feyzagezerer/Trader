@@ -3,8 +3,8 @@
 
 Screens 
 
-[exampleScreenLogin](exampleScreenLogin.jpeg)
-[exampleScreenPortfolio](exampleScreenPortfolio.jpeg)
+[!exampleScreenLogin](https://github.com/feyzagezerer/Trader/blob/master/app/src/main/res/drawable/exampleScreenLogin.jpeg)
+[!exampleScreenPortfolio](https://github.com/feyzagezerer/Trader/blob/master/app/src/main/res/drawable/exampleScreenPortfolio.jpeg)
 
 
 Libraries and tools
