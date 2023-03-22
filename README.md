@@ -1,5 +1,12 @@
 # Trader
 
+
+Screens 
+
+[exampleScreenLogin](exampleScreenLogin.jpeg)
+[exampleScreenPortfolio](exampleScreenPortfolio.jpeg)
+
+
 Libraries and tools
 
 - Data Binding

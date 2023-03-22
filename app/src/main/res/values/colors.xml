@@ -13,7 +13,7 @@
     <color name="inputTextColor">#80FFFFFF</color>
     <color name="mainTextColor">#FF000000</color>
     <color name="chipTextColor">#5D50FE</color>
-    <color name="buttonColor">#482C7A</color>
-    <color name="itemColor">#361B67</color>
+    <color name="itemColor">#482C7A</color>
+    <color name="buttonColor">#361B67</color>
 
 </resources>
