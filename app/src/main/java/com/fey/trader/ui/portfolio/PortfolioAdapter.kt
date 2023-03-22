@@ -14,6 +14,7 @@ import com.fey.trader.data.model.ListItem
 
 
 import com.squareup.picasso.Picasso
+import java.text.DecimalFormat
 
 class PortfolioAdapter  : RecyclerView.Adapter<PortfolioAdapter.PortfolioViewHolder>() {
 
@@ -43,11 +44,13 @@ class PortfolioAdapter  : RecyclerView.Adapter<PortfolioAdapter.PortfolioViewHol
     }
 
     class PortfolioViewHolder(private val binding: ItemStockBinding) : RecyclerView.ViewHolder(binding.root) {
-
+      //  val decimalFormat = DecimalFormat("#.##")
         fun bind(stock: Item) {
+      //   var amount = decimalFormat.format( stock.acc )
             binding.symbol.text = stock.symbol
             binding.qtyT2.text = stock.qtyT2.toString()
             binding.lastPx.text = stock.lastPx.toString()
+            binding.amount.text = stock.amount.toString()
         //    binding.apply {
        // }
     }

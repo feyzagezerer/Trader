@@ -89,7 +89,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
         android:text="@string/welcome_text"
-        android:textColor="@color/button_bg_color"
+        android:textColor="@color/buttonColor"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

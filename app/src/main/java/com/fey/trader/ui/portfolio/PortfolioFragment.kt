@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fey.trader.R
@@ -27,6 +28,8 @@ class PortfolioFragment : Fragment(
     private val portfolioViewModel: PortfolioFragmentViewModel by viewModels()
     private lateinit var binding: FragmentPortfolioBinding
 private lateinit var portfolioAdapter: PortfolioAdapter
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -52,13 +55,16 @@ private lateinit var portfolioAdapter: PortfolioAdapter
     }
 
     private fun initObservers() {
+
         portfolioViewModel.stocks.observe(viewLifecycleOwner, Observer { stocks ->
             stocks?.let {
                 portfolioAdapter.setStocks(stocks)
+
             }
         })
         portfolioViewModel.apply {
             stocksSuccess.observe(viewLifecycleOwner) {
+
             }
             errorMessage.observe(viewLifecycleOwner) {
                 if (it.isNotEmpty()) {

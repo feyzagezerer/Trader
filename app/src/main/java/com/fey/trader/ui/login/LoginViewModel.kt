@@ -1,6 +1,5 @@
 package com.fey.trader.ui.login
 
-import android.content.Context
 import android.content.SharedPreferences
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -12,9 +11,7 @@ import com.fey.trader.core.Constants.NetworkService.MsgType
 import com.fey.trader.core.Constants.NetworkService.OutputType
 import com.fey.trader.data.model.LoginResponse
 import com.fey.trader.data.remote.MatriksApi
-import com.fey.trader.data.repo.auth.UserRepository
 import com.fey.trader.utils.UserAuthResult
-import dagger.hilt.android.internal.Contexts.getApplication
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers

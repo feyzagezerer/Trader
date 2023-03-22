@@ -9,5 +9,11 @@
     <string name="welcome_text">Hoş geldiniz</string>
     <string name="login_description_text">Trader uygulamasına giriş yapmak üzeresiniz</string>
     <string name="unexpected_exception">unexpected exception</string>
+    <string name="toplam_tutar">Toplam Tutar :</string>
+    <string name="tutar">Tutar</string>
+    <string name="fiyat">Fiyat</string>
+    <string name="miktar_t2">Miktar T2</string>
+    <string name="menkul">Menkul</string>
+    <string name="hesap_zeti">Hesap Özeti</string>
 
 </resources>

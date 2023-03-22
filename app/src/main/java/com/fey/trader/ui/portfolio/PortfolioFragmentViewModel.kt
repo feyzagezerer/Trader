@@ -1,23 +1,20 @@
 package com.fey.trader.ui.portfolio
 
 import android.content.SharedPreferences
+import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.fey.trader.core.BaseViewModel
 import com.fey.trader.core.Constants
 import com.fey.trader.data.model.Item
-import com.fey.trader.data.model.LoginResponse
 
 import com.fey.trader.data.model.StocksResponse
 import com.fey.trader.data.remote.MatriksApi
-import com.fey.trader.utils.Resource
-import com.fey.trader.utils.UserAuthResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.launch
-import retrofit2.Call
 import timber.log.Timber
 
 import javax.inject.Inject
@@ -34,11 +31,14 @@ val stocks: LiveData<List<Item>> = _stocks
     val resultLoading = MutableLiveData(false)
     val stocksSuccess = MutableLiveData(false)
     val errorMessage = MutableLiveData<String>()
-    var multiplicationResult = mutableListOf<Double>()
+    var totalAmount = 0.0
+    var totalAmountString = MutableLiveData<String>()
+
 
     init{
         getStocks()
     }
+    @WorkerThread
       fun getStocks(){
         viewModelScope.launch {
      val username  =  sharedPreferences.getString("username", "default")
@@ -61,16 +61,17 @@ val stocks: LiveData<List<Item>> = _stocks
                         .subscribe {
                             Timber.e("stocksResponse %s %s %s",it.item[0].symbol,it.item[1].symbol,it.result.description)
                             checkResult(it)
-                            multiplicationResult(it.item)
                         })
                 }
             }
             resultLoading.postValue(true)
         }
     }
+    @WorkerThread
     private fun checkResult(stocksResponse: StocksResponse){
         if(stocksResponse.result.state){
             resultLoading.postValue(false)
+            multiplicationResult(stocksResponse.item)
             _stocks.postValue (stocksResponse.item)
                 stocksSuccess.postValue(true)
         }else{
@@ -78,15 +79,15 @@ val stocks: LiveData<List<Item>> = _stocks
             errorMessage.postValue(stocksResponse.result.description)
         }
     }
+    @WorkerThread
     private fun multiplicationResult(item: List<Item>) {
-var totalAmount = 0.0
-        for(i in 0 until item.size){
-            Timber.e("stocksResponse %s  %s  %s",item[i].qtyT2,item[i].lastPx,item[i].qtyT2 * item[i].lastPx)
-            var amount = item[i].qtyT2 * item[i].lastPx
-            totalAmount += amount
-            Timber.e("stocksResponse %s   %s",amount,totalAmount)
-
+        for(i in item.indices){
+           totalAmount += item[i].amount
         }
+        totalAmountString.postValue(totalAmount.toString())
+
+        // amountList.postValue ( amount)
+
     }
     private fun clearSharedPreferences() {
         val editor = sharedPreferences.edit()
