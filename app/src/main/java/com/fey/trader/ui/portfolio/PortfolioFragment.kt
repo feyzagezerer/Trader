@@ -52,10 +52,13 @@ private lateinit var portfolioAdapter: PortfolioAdapter
     }
 
     private fun initObservers() {
-       dol()
+        portfolioViewModel.stocks.observe(viewLifecycleOwner, Observer { stocks ->
+            stocks?.let {
+                portfolioAdapter.setStocks(stocks)
+            }
+        })
         portfolioViewModel.apply {
             stocksSuccess.observe(viewLifecycleOwner) {
-        Timber.e ("GELDİLER")
             }
             errorMessage.observe(viewLifecycleOwner) {
                 if (it.isNotEmpty()) {
@@ -67,12 +70,5 @@ private lateinit var portfolioAdapter: PortfolioAdapter
         portfolioViewModel.getStocks()
     }
 
-private fun dol(){
-    portfolioViewModel.stocks.observe(viewLifecycleOwner, Observer { stocks ->
-        stocks?.let {
-            portfolioAdapter.setStocks(stocks)
-        }
-    })
-}
 
 }

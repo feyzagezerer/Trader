@@ -25,24 +25,79 @@
                     android:visibility="@{viewModel.resultLoading==true ? View.VISIBLE : View.GONE}"
                     android:layout_centerInParent="true"/>
 
-
                 <TextView
                     android:id="@+id/textViewForecastHeader"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginLeft="16dp"
                     android:text="Hesap Özeti"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="19sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/myCardView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/button_bg_color"
+                    app:cardCornerRadius="15dp"
+                    android:layout_below="@id/textViewForecastHeader"
+                    app:cardElevation="4dp"
+                    app:cardUseCompatPadding="true"
+                    app:contentPadding="16dp"
+                    android:layout_margin="16dp">
+                    <TextView
+                        android:id="@+id/symbol"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:text="Menkul"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:id="@+id/qty_T2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="90dp"
+                        android:text="Miktar T2"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/lastPx"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="185dp"
+                        android:text="Fiyat"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/amount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Tutar "
+                        android:textAlignment="textEnd"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                </androidx.cardview.widget.CardView>
+
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerStock"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/textViewForecastHeader"
+                    android:layout_below="@id/myCardView"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="16dp"
                     android:layout_marginEnd="8dp"
                     android:orientation="vertical"
                     tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

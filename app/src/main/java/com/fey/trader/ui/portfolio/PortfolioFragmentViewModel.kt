@@ -34,6 +34,7 @@ val stocks: LiveData<List<Item>> = _stocks
     val resultLoading = MutableLiveData(false)
     val stocksSuccess = MutableLiveData(false)
     val errorMessage = MutableLiveData<String>()
+    var multiplicationResult = mutableListOf<Double>()
 
     init{
         getStocks()
@@ -58,10 +59,9 @@ val stocks: LiveData<List<Item>> = _stocks
                         .subscribeOn(Schedulers.io())
                         .observeOn(Schedulers.io())
                         .subscribe {
-
                             Timber.e("stocksResponse %s %s %s",it.item[0].symbol,it.item[1].symbol,it.result.description)
                             checkResult(it)
-
+                            multiplicationResult(it.item)
                         })
                 }
             }
@@ -78,7 +78,16 @@ val stocks: LiveData<List<Item>> = _stocks
             errorMessage.postValue(stocksResponse.result.description)
         }
     }
+    private fun multiplicationResult(item: List<Item>) {
+var totalAmount = 0.0
+        for(i in 0 until item.size){
+            Timber.e("stocksResponse %s  %s  %s",item[i].qtyT2,item[i].lastPx,item[i].qtyT2 * item[i].lastPx)
+            var amount = item[i].qtyT2 * item[i].lastPx
+            totalAmount += amount
+            Timber.e("stocksResponse %s   %s",amount,totalAmount)
 
+        }
+    }
     private fun clearSharedPreferences() {
         val editor = sharedPreferences.edit()
         editor.clear()
